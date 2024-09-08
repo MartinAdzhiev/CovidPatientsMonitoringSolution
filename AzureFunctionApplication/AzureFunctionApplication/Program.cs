@@ -27,10 +27,14 @@ var host = new HostBuilder()
 
         services.AddTransient<IDeviceRepository, DeviceRepository>();
         services.AddTransient<IPatientMeasureRepository, PatientMeasureRepository>();
+        services.AddTransient<IDataReadingRepository, DataReadingRepository>();
+        services.AddTransient<IWarningRepository, WarningRepository>();
 
 
         services.AddTransient<IDeviceService, DeviceService>();
         services.AddTransient<IPatientMeasureService, PatientMeasureService>();
+        services.AddTransient<IDataReadingService, DataReadingService>();
+        services.AddTransient<IWarningService, WarningService>();
     })
     .Build();
 

@@ -13,12 +13,15 @@ namespace AzureFunctionApplication
         private readonly ILogger<TelemetryFunction> _logger;
         private readonly IDeviceService _deviceService;
         private readonly IPatientMeasureService _patientMeasureService;
-
-        public TelemetryFunction(ILogger<TelemetryFunction> logger, IDeviceService deviceService, IPatientMeasureService patientMeasureService)
+        private readonly IDataReadingService _dataReadingService;
+        private readonly IWarningService _warningService;
+        public TelemetryFunction(ILogger<TelemetryFunction> logger, IDeviceService deviceService, IPatientMeasureService patientMeasureService, IDataReadingService dataReadingService, IWarningService warningService)
         {
             _logger = logger;
             _deviceService = deviceService;
             _patientMeasureService = patientMeasureService;
+            _dataReadingService = dataReadingService;
+            _warningService = warningService;
         }
 
         [Function(nameof(TelemetryFunction))]
@@ -80,19 +83,35 @@ namespace AzureFunctionApplication
 
             if (patientMeasureId == 0)
             {
-                await _patientMeasureService.InsertPatientMeasureAsync(patientMeasureReading.Name, patientMeasureReading.Embg, patientMeasureReading.MeasureType, 0.0, 100.0, deviceId);
+                var maxThreshold = 0.0;
+                var minThreshold = 0.0;
+
+                if(patientMeasureReading.MeasureType.Equals("Heart Rate"))
+                {
+                    maxThreshold = 140.0;
+                    minThreshold = 30.0;
+                }
+
+                if(patientMeasureReading.MeasureType.Equals("Oxygen Saturation"))
+                {
+                    maxThreshold = 100.0;
+                    minThreshold = 92.0;
+                }
+
+                await _patientMeasureService.InsertPatientMeasureAsync(patientMeasureReading.Name, patientMeasureReading.Embg, patientMeasureReading.MeasureType, minThreshold, maxThreshold, deviceId);
                 patientMeasureId = await _patientMeasureService.GetPatientMeasureIdByEmbgAndMeasureTypeAsync(patientMeasureReading.Embg, patientMeasureReading.MeasureType);
             }
 
             patientMeasureReading.PatientMeasureId = patientMeasureId;
-/*            await _measureService.InsertDataAsync(sensorMeasureObject.Value, sensorMeasureObject.Time, sensorMeasureObject.Buffered, sensorId);
-            await _externalApiService.PostDataAsync(sensorMeasureObject);*/
+            await _dataReadingService.InsertDataAsync(patientMeasureReading.Value, patientMeasureReading.Time, patientMeasureReading.PatientMeasureId);
+            //await _externalApiService.PostDataAsync(sensorMeasureObject);
 
-/*            var warningType = await _warningService.WarningCheck(sensorMeasureObject.Value, sensorId);
-            if (warningType != WarningType.NoWarning)
+            var hasWarning = await _warningService.WarningCheck(patientMeasureReading.Value, patientMeasureId);
+            if (hasWarning)
             {
-                await HandleWarningAsync(sensorMeasureObject, warningType);
-            }*/
+                var (minThreshold, maxThreshold) = await _patientMeasureService.GetThresholdsByPatientMeasureIdAsync(patientMeasureId);
+                await _warningService.InsertWarningAsync(patientMeasureId, patientMeasureReading.Time, minThreshold, maxThreshold, patientMeasureReading.Value);
+            }
         }
     }
 }

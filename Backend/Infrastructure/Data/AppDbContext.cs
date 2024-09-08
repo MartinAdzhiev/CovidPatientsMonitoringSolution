@@ -73,6 +73,10 @@ namespace Infrastructure.Data
                 .IsRequired();
 
             modelBuilder.Entity<Warning>()
+                .Property(w => w.Value)
+                .IsRequired();
+
+            modelBuilder.Entity<Warning>()
                 .Property(w => w.CurrentMinThreshold)
                 .IsRequired();
 
