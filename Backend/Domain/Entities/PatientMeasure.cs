@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace Domain.Entities
 {
     public class PatientMeasure
     {
@@ -10,6 +12,7 @@
         public double MaxThreshold { get; set; }
 
         public int DeviceId { get; set; }
+        [JsonIgnore]
         public Device Device { get; set; }
 
         public ICollection<DataReading> DataReadings { get; set; }

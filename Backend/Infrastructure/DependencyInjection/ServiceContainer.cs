@@ -1,6 +1,10 @@
-﻿using Azure.Identity;
+﻿using Application.Interfaces;
+using Application.Service.Interfaces;
+using Application.Service;
+using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Infrastructure.Data;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +24,9 @@ namespace Infrastructure.DependencyInjection
             options.UseNpgsql(dbConn.Value,
                 b => b.MigrationsAssembly(typeof(ServiceContainer).Assembly.FullName)),
                 ServiceLifetime.Scoped);
+
+            services.AddScoped<IDeviceRepository, DeviceRepository>();
+            services.AddScoped<IDeviceService, DeviceService>();
 
             return services;
         }
