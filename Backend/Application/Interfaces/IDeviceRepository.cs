@@ -4,7 +4,7 @@ namespace Application.Interfaces
 {
     public interface IDeviceRepository
     {
-        Task<List<Device>> GetAllAsync();
+        Task<IEnumerable<Device>> GetAllAsync();
         Task<Device?> GetByIdAsync(int id);
     }
 }

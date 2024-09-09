@@ -13,16 +13,19 @@ namespace Infrastructure.Repositories
         {
             _context = context;
         }
-        public async Task<List<Device>> GetAllAsync()
+        public async Task<IEnumerable<Device>> GetAllAsync()
         {
             return await _context.Devices
                 .Include(d => d.PatientMeasures)
-                .ToListAsync(); 
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Device?> GetByIdAsync(int id)
         {
-            return await _context.Devices.FindAsync(id);
+            return await _context.Devices
+                .Include(d => d.PatientMeasures)
+                .FirstOrDefaultAsync(d => d.Id == id);
         }
     }
 }

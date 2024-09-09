@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace Domain.Entities
 {
     public class DataReading
     {
@@ -7,6 +9,7 @@
         public DateTime DateTime { get; set; }
 
         public int PatientMeasureId { get; set; }
+        [JsonIgnore]
         public PatientMeasure PatientMeasure { get; set; }
     }
 }

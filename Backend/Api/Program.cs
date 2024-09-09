@@ -1,3 +1,4 @@
+using Application;
 using Infrastructure.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.InfrastructureServices(builder.Configuration);
+builder.Services.AddAutoMapper(typeof(ApplicationAssemblyMarker).Assembly);
 
 var app = builder.Build();
 
