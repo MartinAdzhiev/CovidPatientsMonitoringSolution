@@ -1,5 +1,9 @@
 using Application;
+using Azure.Identity;
 using Infrastructure.DependencyInjection;
+using Azure.Security.KeyVault.Secrets;
+using Azure.Identity;
+using Api.SignalRConfig;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +14,21 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var keyVaultUrl = builder.Configuration["KeyVault:Url"];
+if (string.IsNullOrWhiteSpace(keyVaultUrl))
+{
+    throw new InvalidOperationException("Key Vault URL is not configured.");
+}
+
+var keyVaultEndpoint = new Uri(keyVaultUrl);
+builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
+
 builder.Services.InfrastructureServices(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(ApplicationAssemblyMarker).Assembly);
+
+var secretClient = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
+KeyVaultSecret signalRConn = await secretClient.GetSecretAsync("SignalRConnectionString");
+builder.Services.AddSignalR().AddAzureSignalR(signalRConn.Value);
 
 var app = builder.Build();
 
@@ -27,5 +44,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<DataReadingHub>("/liveDataReading");
+app.MapHub<WarningHub>("/liveWarning");
 
 app.Run();

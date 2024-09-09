@@ -1,10 +1,10 @@
-using Models;
-using System.Text;
 using Azure.Messaging.EventHubs;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
-using Utilities;
+using Models;
 using Services.Interfaces;
+using System.Text;
+using Utilities;
 
 namespace AzureFunctionApplication
 {
@@ -15,13 +15,15 @@ namespace AzureFunctionApplication
         private readonly IPatientMeasureService _patientMeasureService;
         private readonly IDataReadingService _dataReadingService;
         private readonly IWarningService _warningService;
-        public TelemetryFunction(ILogger<TelemetryFunction> logger, IDeviceService deviceService, IPatientMeasureService patientMeasureService, IDataReadingService dataReadingService, IWarningService warningService)
+        private readonly IExternalApiService _externalApiService;
+        public TelemetryFunction(ILogger<TelemetryFunction> logger, IDeviceService deviceService, IPatientMeasureService patientMeasureService, IDataReadingService dataReadingService, IWarningService warningService, IExternalApiService externalApiService)
         {
             _logger = logger;
             _deviceService = deviceService;
             _patientMeasureService = patientMeasureService;
             _dataReadingService = dataReadingService;
             _warningService = warningService;
+            _externalApiService = externalApiService;
         }
 
         [Function(nameof(TelemetryFunction))]
@@ -104,13 +106,24 @@ namespace AzureFunctionApplication
 
             patientMeasureReading.PatientMeasureId = patientMeasureId;
             await _dataReadingService.InsertDataAsync(patientMeasureReading.Value, patientMeasureReading.Time, patientMeasureReading.PatientMeasureId);
-            //await _externalApiService.PostDataAsync(sensorMeasureObject);
+            await _externalApiService.PostDataAsync(patientMeasureReading);
 
             var hasWarning = await _warningService.WarningCheck(patientMeasureReading.Value, patientMeasureId);
             if (hasWarning)
             {
                 var (minThreshold, maxThreshold) = await _patientMeasureService.GetThresholdsByPatientMeasureIdAsync(patientMeasureId);
-                await _warningService.InsertWarningAsync(patientMeasureId, patientMeasureReading.Time, minThreshold, maxThreshold, patientMeasureReading.Value);
+                if(await _warningService.InsertWarningAsync(patientMeasureId, patientMeasureReading.Time, minThreshold, maxThreshold, patientMeasureReading.Value))
+                {
+                    var warning = new Warning
+                    {
+                        DateTime = patientMeasureReading.Time,
+                        CurrentMinThreshold = minThreshold,
+                        CurrentMaxThreshold = maxThreshold,
+                        Value = patientMeasureReading.Value,
+                        PatientMeasureId = patientMeasureId
+                    };
+                    await _externalApiService.PostWarningAsync(warning);
+                }
             }
         }
     }

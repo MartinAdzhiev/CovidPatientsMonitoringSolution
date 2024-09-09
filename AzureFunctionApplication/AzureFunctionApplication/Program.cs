@@ -35,6 +35,20 @@ var host = new HostBuilder()
         services.AddTransient<IPatientMeasureService, PatientMeasureService>();
         services.AddTransient<IDataReadingService, DataReadingService>();
         services.AddTransient<IWarningService, WarningService>();
+        services.AddTransient<IExternalApiService, ExternalApiService>();
+
+        services.AddHttpClient("ExternalApiClient")
+    .ConfigureHttpClient(client =>
+    {
+    var apiUri = Environment.GetEnvironmentVariable("ApiUri");
+    if (string.IsNullOrWhiteSpace(apiUri))
+    {
+        throw new InvalidOperationException("Api Uri is not configured");
+    }
+    client.BaseAddress = new Uri(apiUri);
+    client.DefaultRequestHeaders.Accept.Clear();
+    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+    });
     })
     .Build();
 
