@@ -26,6 +26,17 @@ builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredent
 builder.Services.InfrastructureServices(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(ApplicationAssemblyMarker).Assembly);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AngularPolicy", builder =>
+    {
+        builder.WithOrigins("http://127.0.0.1:5500")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+
 var secretClient = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
 KeyVaultSecret signalRConn = await secretClient.GetSecretAsync("SignalRConnectionString");
 builder.Services.AddSignalR().AddAzureSignalR(signalRConn.Value);
@@ -40,6 +51,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AngularPolicy");
 
 app.UseAuthorization();
 

@@ -22,7 +22,7 @@ namespace Api.Controllers
         public async Task<IActionResult> PostSensorData([FromBody] LiveDataReading liveDataReading)
         {
 
-            await _dataReadingHub.Clients.All.SendAsync("ReceiveSensorData", liveDataReading);
+            await _dataReadingHub.Clients.All.SendAsync("ReceivePatientReadingData", liveDataReading);
 
             return Ok();
         }
@@ -31,7 +31,7 @@ namespace Api.Controllers
         public async Task<IActionResult> PostSensorData([FromBody] LiveWarning liveWarning)
         {
 
-            await _warningHub.Clients.All.SendAsync("ReceiveSensorData", liveWarning);
+            await _warningHub.Clients.All.SendAsync("ReceiveWarningData", liveWarning);
 
             return Ok();
         }
