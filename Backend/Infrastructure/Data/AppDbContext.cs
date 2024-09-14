@@ -43,16 +43,14 @@ namespace Infrastructure.Data
                 .IsRequired();
 
             modelBuilder.Entity<PatientMeasure>()
-                .HasMany(p => p.DataReadings)
-                .WithOne(d => d.PatientMeasure)
-                .HasForeignKey(d => d.PatientMeasureId);
-
-            modelBuilder.Entity<PatientMeasure>()
                 .HasMany(p => p.Warnings)
                 .WithOne(w => w.PatientMeasure)
                 .HasForeignKey(w => w.PatientMeasureId);
 
             //DataReading
+            modelBuilder.Entity<DataReading>()
+                .HasNoKey();
+
             modelBuilder.Entity<DataReading>()
                 .Property(dr => dr.Value)
                 .IsRequired();
@@ -62,9 +60,7 @@ namespace Infrastructure.Data
                 .IsRequired();
 
             modelBuilder.Entity<DataReading>()
-                .HasOne(dr => dr.PatientMeasure)
-                .WithMany(p => p.DataReadings)
-                .HasForeignKey(dr => dr.PatientMeasureId)
+                .Property(dr => dr.PatientMeasureId)
                 .IsRequired();
 
             //Warning

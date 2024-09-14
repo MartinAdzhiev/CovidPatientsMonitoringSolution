@@ -13,6 +13,18 @@ namespace Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "DataReadings",
+                columns: table => new
+                {
+                    Value = table.Column<double>(type: "double precision", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    PatientMeasureId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Devices",
                 columns: table => new
                 {
@@ -50,33 +62,13 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DataReadings",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Value = table.Column<double>(type: "double precision", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    PatientMeasureId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DataReadings", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DataReadings_PatientMeasures_PatientMeasureId",
-                        column: x => x.PatientMeasureId,
-                        principalTable: "PatientMeasures",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Warnings",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     DateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Value = table.Column<double>(type: "double precision", nullable: false),
                     CurrentMinThreshold = table.Column<double>(type: "double precision", nullable: false),
                     CurrentMaxThreshold = table.Column<double>(type: "double precision", nullable: false),
                     PatientMeasureId = table.Column<int>(type: "integer", nullable: false)
@@ -91,11 +83,6 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DataReadings_PatientMeasureId",
-                table: "DataReadings",
-                column: "PatientMeasureId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PatientMeasures_DeviceId",

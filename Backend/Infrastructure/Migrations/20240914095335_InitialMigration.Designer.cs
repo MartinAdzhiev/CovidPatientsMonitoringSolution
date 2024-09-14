@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240907110755_InitialMigration")]
+    [Migration("20240914095335_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -27,12 +27,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.DataReading", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp with time zone");
 
@@ -41,10 +35,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<double>("Value")
                         .HasColumnType("double precision");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PatientMeasureId");
 
                     b.ToTable("DataReadings");
                 });
@@ -122,22 +112,14 @@ namespace Infrastructure.Migrations
                     b.Property<int>("PatientMeasureId")
                         .HasColumnType("integer");
 
+                    b.Property<double>("Value")
+                        .HasColumnType("double precision");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PatientMeasureId");
 
                     b.ToTable("Warnings");
-                });
-
-            modelBuilder.Entity("Domain.Entities.DataReading", b =>
-                {
-                    b.HasOne("Domain.Entities.PatientMeasure", "PatientMeasure")
-                        .WithMany("DataReadings")
-                        .HasForeignKey("PatientMeasureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PatientMeasure");
                 });
 
             modelBuilder.Entity("Domain.Entities.PatientMeasure", b =>
@@ -169,8 +151,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.PatientMeasure", b =>
                 {
-                    b.Navigation("DataReadings");
-
                     b.Navigation("Warnings");
                 });
 #pragma warning restore 612, 618

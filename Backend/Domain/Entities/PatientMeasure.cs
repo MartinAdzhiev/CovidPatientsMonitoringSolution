@@ -15,7 +15,6 @@ namespace Domain.Entities
         [JsonIgnore]
         public Device Device { get; set; }
 
-        public ICollection<DataReading> DataReadings { get; set; }
         public ICollection<Warning> Warnings { get; set; }
 
     }
