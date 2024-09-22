@@ -8,5 +8,6 @@
         public string MeasureType { get; set; }
         public double MinThreshold { get; set; }
         public double MaxThreshold { get; set; }
+        public int DeviceId { get; set; }
     }
 }

@@ -1,0 +1,43 @@
+<div *ngIf="isLoading" class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+  <div *ngIf="!isLoading" class="device-info-main-container">
+      <div class="header">
+        <div class="returnBackContainer">
+          <div><i (click)="navigateBack()" class="fa-solid fa-circle-chevron-left" (keydown)="handleKeydown($event)"></i> <h2>Back</h2></div>
+        </div>
+        <h2 class="title">{{selectedPatientMeasure.name}}'s Thresholds Configuration</h2>
+      </div>
+      <div class="down">
+        <div class="down-container">
+      <div class="device-info-right-container">
+      <div class="thresholdChange" [ngClass]="{'disabled': isNotSelected}">
+        <div class="device-info-change-min-threshold" [ngClass]="{'disabled': isNotSelected}">
+          <h3>Change Min Threshold</h3>
+          <hr>
+          <div class="min-threshold">
+            <p>Input the new value of the Min Threshold:</p>
+            <input type="number" [(ngModel)]="selectedPatientMeasure.minThreshold"/>
+          </div>
+        </div>
+        
+        <div class="device-info-change-max-threshold" [ngClass]="{'disabled': isNotSelected}">
+          <h3>Change Max Threshold</h3>
+          <hr>
+          <div class="max-threshold">
+            <p>Input the new value of the Max Threshold:</p>
+            <input type="number" [(ngModel)]="selectedPatientMeasure.maxThreshold"/>
+          </div>
+        </div>
+      </div>
+      <div class="buttonDiv">
+        <button class="buttonSensorSelection" [ngClass]="{'disabled': isNotSelected}" (click)="updateThresholds(selectedPatientMeasure.id, selectedPatientMeasure.minThreshold, selectedPatientMeasure.maxThreshold)">Submit</button>
+      </div>
+    </div>
+  </div>
+      
+    </div>
+  
+  </div> 
+    
+    

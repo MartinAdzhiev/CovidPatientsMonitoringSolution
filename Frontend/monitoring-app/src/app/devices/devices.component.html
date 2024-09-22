@@ -1,0 +1,77 @@
+<h2>Select Patient to monitor their data</h2>
+<div class="devicesSectionContainer">
+  <div class="card">
+    <p-toast />
+    <div class="p-table-wrapper">
+      <div *ngIf="isLoading" class="spinner-container">
+        <div class="spinner"></div>
+      </div>
+      <p-table *ngIf="!isLoading" [value]="data" [scrollable]="true" scrollHeight="flex" 
+      [tableStyle]="{'min-width': '50rem'}" dataKey="id" [tableStyle]="{ 'min-width': '60rem' }" [expandedRowKeys]="expandedRows">
+        <ng-template pTemplate="header" >
+          <tr>
+            <th class="backgroundButtonsColor" id="expandCollapse">
+                <div class="flex flex-wrap justify-content-end gap-2 buttonsStyle">
+                    <button class="custom-button" (click)="expandAll()">
+                        <i class="fa-regular fa-square-plus fa-xl"></i>
+                    </button>
+                    <button class="custom-button" (click)="collapseAll()">
+                        <i class="fa-regular fa-square-minus fa-xl"></i>
+                    </button>
+                </div>
+            </th>
+            <th pSortableColumn="deviceName" class="InfoTitle" id="name">Device name <p-sortIcon field="deviceName" /></th>
+          </tr>
+        </ng-template>
+        
+        <ng-template pTemplate="body" let-device let-expanded="expanded">
+          <tr class="rows">
+            <td class="tdFirst buttonRowExpended">
+              <p-button type="button" pRipple [pRowToggler]="device" [icon]="expanded ? 'fa-solid fa-chevron-down' : 'fa-solid fa-chevron-right'" />
+            </td>
+            <td>{{ device.name }}</td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="rowexpansion" let-device>
+          <tr>
+            <td colspan="7">
+              <div class="p-3">
+                <p-table [value]="device.patientMeasuresResponses" [scrollable]="true" scrollHeight="250px"
+                [tableStyle]="{'min-width': '50rem'}" dataKey="id">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th pSortableColumn="name" class="SensorInfoTitleFirst" id="SensorName">Patient <p-sortIcon field="name" /></th>
+                      <th pSortableColumn="embg" class="SensorInfoTitle" id="SensorType">Embg <p-sortIcon field="embg" /></th>
+                      <th pSortableColumn="measureType" class="SensorInfoTitle" id="Value">Measure <p-sortIcon field="measureType" /></th>
+                      <th pSortableColumn="latestDate" class="SensorInfoTitle" id="Date">Date <p-sortIcon field="latestDate" /></th>
+                      <th pSortableColumn="latestTime" class="SensorInfoTitleLast" id="Time">Time <p-sortIcon field="latestTime" /></th>
+                      <th pSortableColumn="value" class="SensorInfoTitle" id="Room">Value <p-sortIcon field="value" /></th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-patient>
+                    <tr class="rows pointer" (click)="onRowClick(device.id, patient.id)" (keydown)="handleKeydown($event)"
+                    [ngClass]="{'red-row': patient.value < patient.minThreshold || patient.value > patient.maxThreshold}">
+                      <td class="tdFirst">{{ patient.name }}</td>
+                      <td>{{ patient.embg }}</td>
+                      <td>{{ patient.measureType }}</td>
+                      <td>{{ patient.latestDate }}</td>
+                      <td>{{ patient.latestTime }}</td>
+                      <td class="tdLast">{{ patient.value }}</td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="emptymessage">
+                    <tr class="noSensorsMessage">
+                      <td colspan="7">There are no Patients for this device yet.</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+

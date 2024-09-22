@@ -1,0 +1,9 @@
+<div id="main" [class.background-change-nav-extended]="extendedNav">
+  <div class="top-bar">
+    <i (click)="extendNav()" class="fa-solid fa-bars fa-1x"></i><span *ngIf="extendedNav">Navigation Bar</span>
+  </div>
+  <div class="icon-container" id="icon-container">
+        <div class="icons" [class.icons-extended]="extendedNav"><a routerLink="/devices" [ngClass]="{'extendedNav': extendedNav}" routerLinkActive="active" ariaCurrentWhenActive="page"><i class="fa-solid fa-tv fa-2x"></i><span *ngIf="extendedNav">Devices</span></a></div>
+        <div class="icons" [class.icons-extended]="extendedNav"><a routerLink="/warnings" [ngClass]="{'extendedNav': extendedNav}" routerLinkActive="active" ariaCurrentWhenActive="page"><i class="fa-solid fa-bell fa-2x"></i><span *ngIf="extendedNav">Warnings</span></a></div>
+  </div>
+</div>

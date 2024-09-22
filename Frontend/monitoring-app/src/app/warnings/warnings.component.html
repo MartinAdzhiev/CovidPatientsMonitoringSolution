@@ -1,0 +1,38 @@
+<div class="container">
+    <h2>Warnings</h2>
+
+    <div class="content-filters-container">
+    <div class="content">
+        <table>
+          <th style="display: none;"></th>
+          <tbody>
+            <ng-container *ngIf="(warnings$ | async)?.length === 0">
+              <tr class="noNotificationFotThisFilter">
+                <td>No Warnings Found</td>
+              </tr>
+            </ng-container>
+            <ng-container *ngFor="let warning of (warnings$ | async)">
+              <ng-container *ngIf="constructWarningMessage(warning).trim() !== ''">
+                <tr>
+                  <td [ngClass]="'urgentType'">
+                    <div class="Icon"><i class="fa-solid fa-triangle-exclamation fa-2xl"></i></div>
+                    <div class="notificationInfo">{{ constructWarningMessage(warning) }}</div>
+                    <div class="time">{{warning.dateTime}}</div>
+                    <div class="button-group">
+                      <button (click)="navigateToWarning(warning)" class="view-button">
+                        <i class="fa-solid fa-eye"></i>
+                      </button>
+                      <button (click)="deleteWarning(warning.id)" class="delete-button">
+                        <i class="fa-solid fa-circle-check"></i>
+                      </button>
+                  </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </ng-container>
+          </tbody>
+        </table>
+    </div>
+    </div>
+</div>
+  

@@ -1,0 +1,118 @@
+<div *ngIf="isLoading" class="spinner-container">
+  <div class="spinner"></div>
+</div>
+<div *ngIf="!isLoading && patient" class="sensor-info-main-container">
+    <div class="sensor-info-left-container">
+      <div class="returnBackContainer">
+        <div><i (click)="navigateToDevices()" class="fa-solid fa-circle-chevron-left" (keydown)="handleKeydown($event)"></i> <h2>Devices</h2></div>
+      </div>
+      <div class="device-sensor-info-container">
+        <div>
+          <h3>{{ device.name }}</h3>
+          <hr>
+          <div class="sensorTitleContainer">
+            <p class="sensorNameTitle">{{patient.name}}</p>
+            <i class="fa-solid fa-gear configureButton" (click)="navigateToConfiguration(device.id, patient.id)" (keydown)="handleKeydown($event)"></i>
+          </div>
+          <div class="sensorTypeText">Measure: {{patient.measureType}}</div>
+          <div>
+            <div class="infos">Embg:</div>
+            <div class="sensorValues">{{patient.embg}}</div>
+          </div>
+          <hr>
+          <div>
+            <div class="infos">MinThreshold:</div>
+            <div class="sensorValues">{{patient.minThreshold}}</div>
+          </div>
+          <div class="maxThreshold">
+            <div  class="infos">MaxThreshold:</div>
+            <div class="sensorValues">{{patient.maxThreshold}}</div>
+          </div>
+          
+          </div>
+      </div>     
+    </div>
+    <div class="sensor-info-right-container">
+      <div class="toggleButton" (click)="changeRealTimeData()" (keydown)="handleKeydown($event)">
+        <div [ngClass]="{'buttonRight': liveData,'buttonLeft': !liveData}" class="button"></div>
+        <div [ngClass]="{'realTime': liveData,'notRealTime': !liveData}" class="buttontext"><h2>Real-time</h2></div>
+        <div [ngClass]="{'historical': liveData,'notHistorical': !liveData}" class="buttontext historicalButtonText"><h2>Historical</h2></div>
+      </div>
+      <div class="filterContainer" [ngClass]="{'visible': !liveData}">
+        <div class="filterTitle">Filters</div>
+        <div class="filterContainerMini">
+          <div class="setInervalContainer">
+            <div class="filterText">Set interval:</div>
+            <mat-form-field>
+              <mat-select #intervalSelect>
+                <mat-option value="30">Last 30min</mat-option>
+                <mat-option value="60">Last hour</mat-option>
+                <mat-option value="1440">Last day</mat-option>
+                <mat-option value="10080">Last week</mat-option>
+                <mat-option value="43829">Last month</mat-option>
+                <mat-option value="525948">Last year</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <i class="fa-solid fa-square-caret-right fa-xl" (click)="setIntervalClick(intervalSelect)" (keydown)="handleKeydown($event)"></i>
+          </div>
+          <div class="setRangeContainer">
+            <div class="filterText">Set range:</div>
+            <mat-form-field class="example-form-field">
+              <mat-date-range-input [formGroup]="dateRangeForm" [rangePicker]="picker">
+                <input matStartDate placeholder="Start date" formControlName="start" />
+                <input matEndDate placeholder="End date" formControlName="end" />
+              </mat-date-range-input>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+            <i class="fa-solid fa-square-caret-right fa-xl" (click)="setIntervalRangeClick()" (keydown)="handleKeydown($event)"></i>
+          </div>
+        </div>
+      </div>
+      <div [ngClass]="{'historicalDataContainer': !liveData, 'dataContainer': liveData}">
+        <div class="tableContainer" *ngIf="liveData" id="liveDataTable">
+          <table>
+            <thead>
+              <tr>
+                <th style="border-top-left-radius: 5px;">Value</th>
+                <th>Date</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let patienrReading of liveDataReading"
+              [ngClass]="{'red-row': patienrReading.value < patient.minThreshold || patienrReading.value > patient.maxThreshold}">
+                <td>{{ patienrReading.value }}</td>
+                <td>{{ patienrReading.latestDate }}</td>
+                <td>{{ patienrReading.latestTime }}</td>
+              </tr>
+              <tr *ngFor="let dataReading of lastTen" class="coldDataColor">
+                <td>{{ dataReading.value }}</td>
+                <td>{{ dataReading.dateTime | date: 'yyyy-MM-dd' }}</td>
+                <td>{{ dataReading.dateTime | date: 'HH:mm:ss' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tableContainer" *ngIf="!liveData">
+          <table>
+            <thead>
+              <tr>
+                <th style="border-top-left-radius: 5px;">Value</th>
+                <th>Date</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of dataReading">
+                <td>{{ data.value | number:'1.2-2'}}</td>
+                <td>{{ data.dateTime | date: 'yyyy-MM-dd' }}</td>
+                <td>{{ data.dateTime | date: 'HH:mm:ss' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+</div>
+    

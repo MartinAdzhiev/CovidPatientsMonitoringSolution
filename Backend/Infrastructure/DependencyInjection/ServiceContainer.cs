@@ -28,6 +28,15 @@ namespace Infrastructure.DependencyInjection
             services.AddScoped<IDeviceRepository, DeviceRepository>();
             services.AddScoped<IDeviceService, DeviceService>();
 
+            services.AddScoped<IPatientMeasureRepository, PatientMeasureRepository>();
+            services.AddScoped<IPatientMeasureService, PatientMeasureService>();
+
+            services.AddScoped<IDataReadingService, DataReadingService>();
+            services.AddScoped<IDataReadingRepository, DataReadingRepository>();
+
+            services.AddScoped<IWarningRepository, WarningRepository>();
+            services.AddScoped<IWarningService, WarningService>();
+
             return services;
         }
     }

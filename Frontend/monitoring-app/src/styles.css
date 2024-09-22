@@ -1,1 +1,242 @@
-/* You can add global styles to this file, and also import other style files */
+html, body { 
+  height: 100%;
+}
+
+body { 
+  margin: 0;
+  font-family: 'Kanit', sans-serif !important;
+  font-weight: 300;
+  display: flex;
+  flex-direction: column;
+}
+
+app-root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+app-dashboard, main, app-header, app-device-nav, app-sensor-info, app-donut-chart, app-device-config, app-notifications {
+width: 100%;
+height: 100%;
+}
+
+app-map {
+width: 100%;
+height: 100%;
+}
+
+#main,
+.icon-container,
+#icon-container,
+.icons,
+.background-change-nav-extended {
+transition: all 0.4s ease;
+}
+.p-datatable {
+z-index: 0;
+}
+#icon-container a.active.extendedNav {
+transition: margin-left 0.1s ease-out;
+}
+
+.icons-extended {
+transition: padding-left 0.5s ease;
+}
+
+::-webkit-scrollbar {
+width: 7px;
+}
+
+::-webkit-scrollbar-track {
+background-color: rgba(153, 153, 153, 0.63); 
+border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+background-color: rgba(23, 22, 22, 0.61);
+border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+background-color: rgba(23, 22, 22, 0.84);
+}
+.scrollable-div::-webkit-scrollbar:horizontal {
+height: 7px;
+}
+
+.p-button {
+border: none;
+background-color: transparent;
+}
+
+.p-button:hover {
+  color: rgb(151, 149, 149);
+  cursor: pointer;
+}
+
+@media (max-width: 1600px) {
+  app-donut-chart .canvasjs-chart-canvas {
+    width: 210px !important;
+    height: 210px !important;
+  }
+  app-donut-chart [id^="canvasjs-angular-chart-container"] {
+    width: 210px !important;
+    height: 210px !important;
+  }
+  app-donut-chart .percentageContainer {
+    padding-top: 10px;
+    font-size: 1.15rem;
+  }
+
+  /* app-line-chart .canvasjs-chart-canvas {
+    width: 100% !important;
+    height: 270px !important;
+  }
+  app-line-chart #canvasjs-angular-chart-container-0 {
+    width: 100% !important;
+    height: 270px !important;
+  } */
+}
+
+@media (min-width: 1600px) {
+  /* app-line-chart .canvasjs-chart-canvas {
+    width: 100% !important;
+    height: 400px !important;
+  }
+  app-line-chart #canvasjs-angular-chart-container-0 {
+    width: 100% !important;
+    height: 400px !important;
+  } */
+  app-donut-chart .percentageContainer {
+    padding-top: 10px;
+    font-size: 1.5rem;
+  }
+}
+
+app-line-chart [id^="canvasjs-angular-chart-container-"] {
+  padding-top: 10px !important;
+}
+
+app-donut-chart canvasjs-chart {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: flex;
+}
+
+.canvasjs-chart-credit {
+  display: none;
+}
+
+
+.mdc-text-field--outlined .mat-mdc-form-field-infix, .mdc-text-field--no-label .mat-mdc-form-field-infix {
+  padding: 0 !important;
+  padding-top: 7px !important;
+}
+
+.mat-mdc-text-field-wrapper {
+  background-color: #D9D9D9 !important;
+  border-radius: 5px !important;
+}
+
+.mat-mdc-form-field-flex {
+  height: 40px !important;
+}
+
+.setRangeContainer .mat-mdc-form-field {
+  width: 65% !important;
+}
+
+.mdc-line-ripple {
+  display: none !important;
+}
+
+.mat-mdc-form-field.mat-focused .mat-mdc-select-arrow {
+  color: #333 !important;
+}
+
+.mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple) {
+  background-color: #a8a8a8 !important;
+}
+
+.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after {
+  color: #333 !important;
+}
+
+.mat-calendar-body-selected {
+  background-color: #333 !important;
+}
+
+.mat-calendar-body-today:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+  border-color: #333 !important;
+}
+
+.mat-calendar-body-in-range .mat-calendar-body-cell-preview {
+  background-color: #c0c0c0;
+}
+.mat-calendar-body-range-start .mat-calendar-body-cell-preview {
+  border-top-left-radius: 27px !important;
+  border-bottom-left-radius: 27px !important;
+}
+
+.mat-calendar-body-range-end .mat-calendar-body-cell-preview {
+  border-top-right-radius: 27px !important;
+  border-bottom-right-radius: 27px !important;
+}
+.mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+:root {
+  --mat-datepicker-calendar-date-preview-state-outline-color: black !important;
+  --mat-datepicker-calendar-date-preview-state-outline-decoration: solid !important; 
+}
+.mat-calendar-body-selected.mat-calendar-body-today {
+  box-shadow: inset 0 0 0 1px gray !important;
+}
+.mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
+  background-color: #b43636 !important;
+  color: white !important;
+}
+.mdc-button__label {
+  color: #333 !important;
+  font-size: 17px;
+}
+.mdc-snackbar__actions {
+  border-left: 1px solid rgb(114, 6, 6) !important;
+}
+.mdc-snackbar__actions span {
+  color: white !important;
+}
+
+.filterContainerMini .mat-mdc-button-touch-target {
+  border: none !important;
+}
+
+/* Assuming you want to center it relative to the viewport */
+.spinner-container {
+  position: absolute; /* Fixed or absolute depending on your needs */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner {
+  width: 35px;
+  height: 35px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-left: 5px solid #4b5358;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Keyframes for spinning animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

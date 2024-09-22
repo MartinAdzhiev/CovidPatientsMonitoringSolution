@@ -1,0 +1,443 @@
+.sensor-info-left-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    width: 100%;
+}
+.sensor-info-main-container {
+    margin-left: 3%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    color: #3A3A3A;
+}
+
+@media (max-width: 1600px) {
+    .sensor-info-left-container {
+        flex: 1;
+    }
+    .sensorInfoContainer {
+        margin-bottom: 30px;
+    }
+    .device-sensor-info-container h3 {
+        font-size: 1.17rem;
+    }
+    .device-sensor-info-container p {
+        font-size: 1rem;
+    }
+    .sensorTypeText,
+    .sensor-info-sensor-name,
+    .sensorType, 
+    .lastData  {
+        font-size: 0.8rem;
+    }
+    h2.sensorCurrentValue {
+        font-size: 1.5rem;
+    }
+    .infos {
+        font-size: 0.87rem;
+        display: inline-block;
+    }
+    .maxThreshold {
+        padding-top: 0;
+    }
+    .sensorValues {
+        font-size: 1rem;
+        display: inline-block;
+    }
+    .iconContainer {
+        height: 60px;
+        width: 60px;
+        top: -10px;
+    }
+    .iconContainer img {
+        width: 50px;
+        height: 50px;
+    }
+    .returnBackContainer i {
+        font-size: 26px;
+    }
+    .returnBackContainer h2 {
+        font-size: 22px;
+    }
+    .sensorTitleContainer i {
+        font-size: 16px;
+    }
+}
+@media (min-width: 1600px) {
+    .sensor-info-left-container {
+        flex: 1.22;
+    }
+    .sensorInfoContainer {
+        margin-bottom: 90px;
+    }
+    .device-sensor-info-container h3 {
+        font-size: 1.4rem;
+    }
+    .device-sensor-info-container p {
+        font-size: 1.3rem;
+    }
+    .sensorTypeText,
+    .sensor-info-sensor-name,
+    .sensorType,
+    .lastData  {
+        font-size: 1rem;
+    }
+    h2.sensorCurrentValue {
+        font-size: 2.3rem;
+    }
+    .infos {
+        font-size: 1rem;
+    }
+    .maxThreshold {
+        padding-top: 5px;
+    }
+    .sensorValues {
+        font-size: 1.3rem;
+    }
+    .iconContainer {
+        height: 100px;
+        width: 100px;
+        top: -30px;
+    }
+    .iconContainer img {
+        width: 90px;
+        height: 90px;
+    }
+    .returnBackContainer i {
+        font-size: 30px;
+    }
+    .returnBackContainer h2 {
+        font-size: 30px;
+    }
+    .sensorTitleContainer i {
+        font-size: 20px;
+    }
+}
+
+.returnBackContainer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 5%;
+}
+.returnBackContainer i {
+    padding-right: 3%;
+}
+.returnBackContainer i:hover {
+    color: #666666;
+    cursor: pointer;
+}
+.returnBackContainer div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.returnBackContainer h2 {
+    margin-left: 13%;
+}
+
+h2 {
+    font-weight: 100;
+}
+
+.device-sensor-info-container,
+.sensorInfoContainer,
+.sensorLatesMeasure {
+    padding: 25px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+}
+.device-sensor-info-container h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-weight: 100;
+}
+.sensorTitleContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.sensorNameTitle {
+    margin-top: 0 !important;
+}
+.sensorTitleContainer i {
+    padding-right: 5px;
+}
+.sensorTitleContainer i:hover {
+    color: #666666;
+    cursor: pointer;
+}
+.sensorTypeText {
+    padding-bottom: 5px;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #D9D9D9;
+    margin: 10px 0;
+    padding: 0;
+}
+
+.sensorLatesMeasure {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+.sensorCurrentValue {
+    text-align: end;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.iconContainer {
+    position: absolute;
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.35);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.5s ease; 
+}
+.sensorType {
+    text-align: end;
+}
+.lastData {
+    text-align: center;
+}
+.sensorInfoContainer div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.address {
+    margin-bottom: 15px;
+}
+
+.sensor-info-right-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex: 4;
+}
+
+.toggleButton h2 {
+    margin: 10px 0;
+    text-align: center;
+}
+.toggleButton:hover {
+    cursor: pointer;
+}
+.toggleButton {
+    width: 45%;
+    height: 50px;
+    background-color: #D9D9D9;
+    border-radius: 5px;
+    margin-top: 3%;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.button {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background-color: #3A3A3A;
+    border-radius: 5px;
+    z-index: 9;
+    right: 0;
+    transition: transform 0.3s ease-in-out;
+}
+.buttonRight {
+    transform: translateX(-100%);
+}
+.buttonLeft {
+    transform: translateX(0);
+}
+
+.buttontext {
+    width: 50%;
+    z-index: 10;
+    border-radius: 5px;
+}
+.historicalButtonText {
+    color: #3A3A3A;
+}
+
+.realTime {
+    color: #D9D9D9;
+    transition: 0.2s ease-in-out;
+}
+.historical {
+    color: #3A3A3A;
+    transition: 0.2s ease-in-out;
+}
+
+.notRealTime {
+    color: #3A3A3A;
+    transition: 0.2s ease-in-out;
+}
+.notHistorical {
+    color: #D9D9D9;
+    transition: 0.2s ease-in-out;
+}
+
+
+.dataContainer, 
+.historicalDataContainer {
+    width: 80%;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+    transition: 0.15s ease;
+    border-radius: 5px;
+    z-index: 10;
+}
+
+@media (max-width: 1600px) {
+    .dataContainer {
+        height: 75%;
+        margin-bottom: 3%;
+    }
+    .historicalDataContainer {
+        height: 57%;
+        margin-bottom: 3%;
+    }
+    .tableContainer {
+        max-height: 52.3vh;
+    }
+    #liveDataTable {
+        max-height: 68.7vh;
+    }
+    thead th {
+        height: 40px;
+        font-size: large;
+        font-weight: 300;
+    }
+    table td {
+        height: 30px;
+        font-size: medium;
+    }
+}
+@media (min-width: 1600px) {
+    .historicalDataContainer {
+        height: 70%;
+        margin-bottom: 3%;
+    }
+    .dataContainer {
+        height: 80%;
+        margin-bottom: 3%;
+    }
+    .tableContainer {
+        max-height: 64.2vh;
+    }
+    #liveDataTable {
+        max-height: 73.4vh;
+    }
+    thead th {
+        height: 50px;
+        font-size: x-large;
+        font-weight: 300;
+    }
+    table td {
+        height: 35px;
+        font-size: large;
+    }
+}
+input[type=radio] {
+    accent-color: #3A3A3A;
+}
+.typesOfDataContainer {
+    width: 60%;
+    height: 50px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+    font-size: 1.25rem;
+}
+
+.filterContainer {
+    width: 70%;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    visibility: hidden; 
+    transition: max-height 0s ease-in-out, opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    z-index: 6;
+}
+  
+.filterContainer.visible {
+    max-height: 500px; 
+    opacity: 1; 
+    visibility: visible; 
+    z-index: 6;
+}  
+  
+.filterContainerMini {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.filterContainerMini i:hover,
+label:hover {
+    cursor: pointer;
+    color: #666666;
+}
+
+.setInervalContainer,
+.setRangeContainer {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    font-family: 'Kanit', sans-serif !important;
+    font-size: large;
+}
+.setRangeContainer {
+    margin-left: 20px;
+}
+.filterTitle {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+.tableContainer {
+    overflow-y: auto;
+}
+table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+thead th {
+    position: sticky;
+    top: 0;
+    background-color: #fcfcfc;
+    z-index: 1;
+  }
+
+.filterText {
+    font-size: large;
+}
+.coldDataColor {
+    color: rgb(32, 149, 196);
+}
+.red-row {
+    background-color: red;
+    color: white; /* Optional for better readability */
+  }
+  
